@@ -2,7 +2,6 @@ package badjson
 
 import (
 	"bytes"
-	"context"
 	"strings"
 
 	"github.com/konglong147/sing/common"
@@ -29,10 +28,6 @@ func (m *JSONObject) IsEmpty() bool {
 }
 
 func (m *JSONObject) MarshalJSON() ([]byte, error) {
-	return m.MarshalJSONContext(context.Background())
-}
-
-func (m *JSONObject) MarshalJSONContext(ctx context.Context) ([]byte, error) {
 	buffer := new(bytes.Buffer)
 	buffer.WriteString("{")
 	items := common.Filter(m.Entries(), func(it collections.MapEntry[string, any]) bool {
@@ -43,13 +38,13 @@ func (m *JSONObject) MarshalJSONContext(ctx context.Context) ([]byte, error) {
 	})
 	iLen := len(items)
 	for i, entry := range items {
-		keyContent, err := json.MarshalContext(ctx, entry.Key)
+		keyContent, err := json.Marshal(entry.Key)
 		if err != nil {
 			return nil, err
 		}
 		buffer.WriteString(strings.TrimSpace(string(keyContent)))
 		buffer.WriteString(": ")
-		valueContent, err := json.MarshalContext(ctx, entry.Value)
+		valueContent, err := json.Marshal(entry.Value)
 		if err != nil {
 			return nil, err
 		}
@@ -63,11 +58,7 @@ func (m *JSONObject) MarshalJSONContext(ctx context.Context) ([]byte, error) {
 }
 
 func (m *JSONObject) UnmarshalJSON(content []byte) error {
-	return m.UnmarshalJSONContext(context.Background(), content)
-}
-
-func (m *JSONObject) UnmarshalJSONContext(ctx context.Context, content []byte) error {
-	decoder := json.NewDecoderContext(ctx, bytes.NewReader(content))
+	decoder := json.NewDecoder(bytes.NewReader(content))
 	m.Clear()
 	objectStart, err := decoder.Token()
 	if err != nil {

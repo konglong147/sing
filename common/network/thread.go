@@ -11,7 +11,6 @@ type ThreadUnsafeWriter interface {
 }
 
 // Deprecated: Use ReadWaiter interface instead.
-
 type ThreadSafeReader interface {
 	// Deprecated: Use ReadWaiter interface instead.
 	ReadBufferThreadSafe() (buffer *buf.Buffer, err error)
@@ -19,6 +18,7 @@ type ThreadSafeReader interface {
 
 // Deprecated: Use ReadWaiter interface instead.
 type ThreadSafePacketReader interface {
+	// Deprecated: Use ReadWaiter interface instead.
 	ReadPacketThreadSafe() (buffer *buf.Buffer, addr M.Socksaddr, err error)
 }
 

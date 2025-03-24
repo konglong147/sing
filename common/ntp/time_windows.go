@@ -7,7 +7,6 @@ import (
 )
 
 func SetSystemTime(nowTime time.Time) error {
-	nowTime = nowTime.UTC()
 	var systemTime windows.Systemtime
 	systemTime.Year = uint16(nowTime.Year())
 	systemTime.Month = uint16(nowTime.Month())

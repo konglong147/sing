@@ -1,35 +1,30 @@
 package badoption
 
 import (
-	"context"
-
 	E "github.com/konglong147/sing/common/exceptions"
 	"github.com/konglong147/sing/common/json"
 )
 
 type Listable[T any] []T
 
-func (l Listable[T]) MarshalJSONContext(ctx context.Context) ([]byte, error) {
+func (l Listable[T]) MarshalJSON() ([]byte, error) {
 	arrayList := []T(l)
 	if len(arrayList) == 1 {
 		return json.Marshal(arrayList[0])
 	}
-	return json.MarshalContext(ctx, arrayList)
+	return json.Marshal(arrayList)
 }
 
-func (l *Listable[T]) UnmarshalJSONContext(ctx context.Context, content []byte) error {
-	if string(content) == "null" {
+func (l *Listable[T]) UnmarshalJSON(content []byte) error {
+	err := json.UnmarshalDisallowUnknownFields(content, (*[]T)(l))
+	if err == nil {
 		return nil
 	}
 	var singleItem T
-	err := json.UnmarshalContextDisallowUnknownFields(ctx, content, &singleItem)
-	if err == nil {
-		*l = []T{singleItem}
-		return nil
+	newError := json.UnmarshalDisallowUnknownFields(content, &singleItem)
+	if newError != nil {
+		return E.Errors(err, newError)
 	}
-	newErr := json.UnmarshalContextDisallowUnknownFields(ctx, content, (*[]T)(l))
-	if newErr == nil {
-		return nil
-	}
-	return E.Errors(err, newErr)
+	*l = []T{singleItem}
+	return nil
 }

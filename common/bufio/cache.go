@@ -184,12 +184,10 @@ func (c *CachedPacketConn) ReadCachedPacket() *N.PacketBuffer {
 	if buffer != nil {
 		buffer.DecRef()
 	}
-	packet := N.NewPacketBuffer()
-	*packet = N.PacketBuffer{
+	return &N.PacketBuffer{
 		Buffer:      buffer,
 		Destination: c.destination,
 	}
-	return packet
 }
 
 func (c *CachedPacketConn) Upstream() any {

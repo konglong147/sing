@@ -21,15 +21,9 @@ import (
 	"github.com/konglong147/sing/common/pipe"
 )
 
-func HandleConnectionEx(
-	ctx context.Context,
-	conn net.Conn,
-	reader *std_bufio.Reader,
-	authenticator *auth.Authenticator,
-	handler N.TCPConnectionHandlerEx,
-	source M.Socksaddr,
-	onClose N.CloseHandlerFunc,
-) error {
+type Handler = N.TCPConnectionHandler
+
+func HandleConnection(ctx context.Context, conn net.Conn, reader *std_bufio.Reader, authenticator *auth.Authenticator, handler Handler, metadata M.Metadata) error {
 	for {
 		request, err := ReadRequest(reader)
 		if err != nil {
@@ -74,7 +68,7 @@ func HandleConnectionEx(
 		}
 
 		if sourceAddress := SourceAddress(request); sourceAddress.IsValid() {
-			source = sourceAddress
+			metadata.Source = sourceAddress
 		}
 
 		if request.Method == "CONNECT" {
@@ -91,6 +85,9 @@ func HandleConnectionEx(
 			if err != nil {
 				return E.Cause(err, "write http response")
 			}
+			metadata.Protocol = "http"
+			metadata.Destination = destination
+
 			var requestConn net.Conn
 			if reader.Buffered() > 0 {
 				buffer := buf.NewSize(reader.Buffered())
@@ -102,8 +99,7 @@ func HandleConnectionEx(
 			} else {
 				requestConn = conn
 			}
-			handler.NewConnectionEx(ctx, requestConn, source, destination, onClose)
-			return nil
+			return handler.NewConnection(ctx, requestConn, metadata)
 		} else if strings.ToLower(request.Header.Get("Connection")) == "upgrade" {
 			destination := M.ParseSocksaddrHostPortStr(request.URL.Hostname(), request.URL.Port())
 			if destination.Port == 0 {
@@ -114,13 +110,14 @@ func HandleConnectionEx(
 					destination.Port = 80
 				}
 			}
+			metadata.Protocol = "http"
+			metadata.Destination = destination
 			serverConn, clientConn := pipe.Pipe()
 			go func() {
-				handler.NewConnectionEx(ctx, clientConn, source, destination, func(it error) {
-					if it != nil {
-						common.Close(serverConn, clientConn)
-					}
-				})
+				err := handler.NewConnection(ctx, clientConn, metadata)
+				if err != nil {
+					common.Close(serverConn, clientConn)
+				}
 			}()
 			err = request.Write(serverConn)
 			if err != nil {
@@ -134,7 +131,7 @@ func HandleConnectionEx(
 			}
 			return bufio.CopyConn(ctx, conn, serverConn)
 		} else {
-			err = handleHTTPConnection(ctx, handler, conn, request, source)
+			err = handleHTTPConnection(ctx, handler, conn, request, metadata)
 			if err != nil {
 				return err
 			}
@@ -144,9 +141,11 @@ func HandleConnectionEx(
 
 func handleHTTPConnection(
 	ctx context.Context,
-	handler N.TCPConnectionHandlerEx,
+	//nolint:staticcheck
+	handler N.TCPConnectionHandler,
 	conn net.Conn,
-	request *http.Request, source M.Socksaddr,
+	request *http.Request,
+	metadata M.Metadata,
 ) error {
 	keepAlive := !(request.ProtoMajor == 1 && request.ProtoMinor == 0) && strings.TrimSpace(strings.ToLower(request.Header.Get("Proxy-Connection"))) == "keep-alive"
 	request.RequestURI = ""
@@ -169,11 +168,16 @@ func handleHTTPConnection(
 		Transport: &http.Transport{
 			DisableCompression: true,
 			DialContext: func(ctx context.Context, network, address string) (net.Conn, error) {
+				metadata.Destination = M.ParseSocksaddr(address)
+				metadata.Protocol = "http"
 				input, output := pipe.Pipe()
-				go handler.NewConnectionEx(ctx, output, source, M.ParseSocksaddr(address), func(it error) {
-					innerErr.Store(it)
-					common.Close(input, output)
-				})
+				go func() {
+					hErr := handler.NewConnection(ctx, output, metadata)
+					if hErr != nil {
+						innerErr.Store(hErr)
+						common.Close(input, output)
+					}
+				}()
 				return input, nil
 			},
 		},
@@ -181,8 +185,6 @@ func handleHTTPConnection(
 			return http.ErrUseLastResponse
 		},
 	}
-	defer httpClient.CloseIdleConnections()
-
 	requestCtx, cancel := context.WithCancel(ctx)
 	response, err := httpClient.Do(request.WithContext(requestCtx))
 	if err != nil {

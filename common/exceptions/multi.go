@@ -63,5 +63,12 @@ func IsMulti(err error, targetList ...error) bool {
 			return true
 		}
 	}
-	return false
+	err = Unwrap(err)
+	multiErr, isMulti := err.(MultiError)
+	if !isMulti {
+		return false
+	}
+	return common.All(multiErr.Unwrap(), func(it error) bool {
+		return IsMulti(it, targetList...)
+	})
 }

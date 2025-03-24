@@ -12,7 +12,6 @@ import (
 	F "github.com/konglong147/sing/common/format"
 )
 
-// Deprecated: wtf is this?
 type Handler interface {
 	NewError(ctx context.Context, err error)
 }
@@ -40,11 +39,11 @@ func Extend(cause error, message ...any) error {
 }
 
 func IsClosedOrCanceled(err error) bool {
-	return IsClosed(err) || IsCanceled(err) || IsTimeout(err)
+	return IsMulti(err, io.EOF, net.ErrClosed, io.ErrClosedPipe, os.ErrClosed, syscall.EPIPE, syscall.ECONNRESET, context.Canceled, context.DeadlineExceeded)
 }
 
 func IsClosed(err error) bool {
-	return IsMulti(err, io.EOF, net.ErrClosed, io.ErrClosedPipe, os.ErrClosed, syscall.EPIPE, syscall.ECONNRESET, syscall.ENOTCONN)
+	return IsMulti(err, io.EOF, net.ErrClosed, io.ErrClosedPipe, os.ErrClosed, syscall.EPIPE, syscall.ECONNRESET)
 }
 
 func IsCanceled(err error) bool {

@@ -15,39 +15,19 @@ type ReadWaitOptions struct {
 	MTU           int
 }
 
-func NewReadWaitOptions(source any, destination any) ReadWaitOptions {
-	return ReadWaitOptions{
-		FrontHeadroom: CalculateFrontHeadroom(destination),
-		RearHeadroom:  CalculateRearHeadroom(destination),
-		MTU:           CalculateMTU(source, destination),
-	}
-}
-
 func (o ReadWaitOptions) NeedHeadroom() bool {
 	return o.FrontHeadroom > 0 || o.RearHeadroom > 0
 }
 
-func (o ReadWaitOptions) Copy(buffer *buf.Buffer) *buf.Buffer {
-	if o.FrontHeadroom > buffer.Start() ||
-		o.RearHeadroom > buffer.FreeLen() {
-		newBuffer := o.newBuffer(buf.UDPBufferSize, false)
-		newBuffer.Write(buffer.Bytes())
-		buffer.Release()
-		return newBuffer
-	} else {
-		return buffer
-	}
-}
-
 func (o ReadWaitOptions) NewBuffer() *buf.Buffer {
-	return o.newBuffer(buf.BufferSize, true)
+	return o.newBuffer(buf.BufferSize)
 }
 
 func (o ReadWaitOptions) NewPacketBuffer() *buf.Buffer {
-	return o.newBuffer(buf.UDPBufferSize, true)
+	return o.newBuffer(buf.UDPBufferSize)
 }
 
-func (o ReadWaitOptions) newBuffer(defaultBufferSize int, reserve bool) *buf.Buffer {
+func (o ReadWaitOptions) newBuffer(defaultBufferSize int) *buf.Buffer {
 	var bufferSize int
 	if o.MTU > 0 {
 		bufferSize = o.MTU + o.FrontHeadroom + o.RearHeadroom
@@ -58,7 +38,7 @@ func (o ReadWaitOptions) newBuffer(defaultBufferSize int, reserve bool) *buf.Buf
 	if o.FrontHeadroom > 0 {
 		buffer.Resize(o.FrontHeadroom, 0)
 	}
-	if o.RearHeadroom > 0 && reserve {
+	if o.RearHeadroom > 0 {
 		buffer.Reserve(o.RearHeadroom)
 	}
 	return buffer

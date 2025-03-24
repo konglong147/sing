@@ -2,10 +2,11 @@ package baderror
 
 import (
 	"context"
-	"errors"
 	"io"
 	"net"
 	"strings"
+
+	E "github.com/konglong147/sing/common/exceptions"
 )
 
 func Contains(err error, msgList ...string) bool {
@@ -21,7 +22,8 @@ func WrapH2(err error) error {
 	if err == nil {
 		return nil
 	}
-	if errors.Is(err, io.ErrUnexpectedEOF) {
+	err = E.Unwrap(err)
+	if err == io.ErrUnexpectedEOF {
 		return io.EOF
 	}
 	if Contains(err, "client disconnected", "body closed by handler", "response body closed", "; CANCEL") {
