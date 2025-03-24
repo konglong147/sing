@@ -5,8 +5,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/sagernet/sing/common"
-	"github.com/sagernet/sing/common/varbin"
+	"github.com/konglong147/sing/common"
+	"github.com/konglong147/sing/common/varbin"
 )
 
 const (

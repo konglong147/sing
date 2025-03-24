@@ -5,11 +5,11 @@ import (
 	"io"
 	"net"
 
-	"github.com/sagernet/sing/common"
-	"github.com/sagernet/sing/common/atomic"
-	"github.com/sagernet/sing/common/debug"
-	E "github.com/sagernet/sing/common/exceptions"
-	F "github.com/sagernet/sing/common/format"
+	"github.com/konglong147/sing/common"
+	"github.com/konglong147/sing/common/atomic"
+	"github.com/konglong147/sing/common/debug"
+	E "github.com/konglong147/sing/common/exceptions"
+	F "github.com/konglong147/sing/common/format"
 )
 
 type Buffer struct {

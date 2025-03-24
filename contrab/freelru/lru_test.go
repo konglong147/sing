@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sagernet/sing/common"
-	F "github.com/sagernet/sing/common/format"
-	"github.com/sagernet/sing/contrab/freelru"
-	"github.com/sagernet/sing/contrab/maphash"
+	"github.com/konglong147/sing/common"
+	F "github.com/konglong147/sing/common/format"
+	"github.com/konglong147/sing/contrab/freelru"
+	"github.com/konglong147/sing/contrab/maphash"
 
 	"github.com/stretchr/testify/require"
 )

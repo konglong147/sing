@@ -3,9 +3,9 @@ package bufio
 import (
 	"net"
 
-	"github.com/sagernet/sing/common/buf"
-	M "github.com/sagernet/sing/common/metadata"
-	N "github.com/sagernet/sing/common/network"
+	"github.com/konglong147/sing/common/buf"
+	M "github.com/konglong147/sing/common/metadata"
+	N "github.com/konglong147/sing/common/network"
 )
 
 type BindPacketConn interface {

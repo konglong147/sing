@@ -4,11 +4,11 @@ import (
 	"net"
 	"os"
 
-	"github.com/sagernet/sing/common/buf"
-	"github.com/sagernet/sing/common/bufio"
-	M "github.com/sagernet/sing/common/metadata"
-	"github.com/sagernet/sing/protocol/socks/socks4"
-	"github.com/sagernet/sing/protocol/socks/socks5"
+	"github.com/konglong147/sing/common/buf"
+	"github.com/konglong147/sing/common/bufio"
+	M "github.com/konglong147/sing/common/metadata"
+	"github.com/konglong147/sing/protocol/socks/socks4"
+	"github.com/konglong147/sing/protocol/socks/socks5"
 )
 
 type LazyConn struct {

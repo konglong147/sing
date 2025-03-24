@@ -5,11 +5,11 @@ import (
 	"context"
 	"strings"
 
-	"github.com/sagernet/sing/common"
-	E "github.com/sagernet/sing/common/exceptions"
-	"github.com/sagernet/sing/common/json"
-	"github.com/sagernet/sing/common/x/collections"
-	"github.com/sagernet/sing/common/x/linkedhashmap"
+	"github.com/konglong147/sing/common"
+	E "github.com/konglong147/sing/common/exceptions"
+	"github.com/konglong147/sing/common/json"
+	"github.com/konglong147/sing/common/x/collections"
+	"github.com/konglong147/sing/common/x/linkedhashmap"
 )
 
 type JSONObject struct {

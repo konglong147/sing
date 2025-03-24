@@ -4,9 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	E "github.com/sagernet/sing/common/exceptions"
-	"github.com/sagernet/sing/common/json"
-	cJSON "github.com/sagernet/sing/common/json/internal/contextjson"
+	E "github.com/konglong147/sing/common/exceptions"
+	"github.com/konglong147/sing/common/json"
+	cJSON "github.com/konglong147/sing/common/json/internal/contextjson"
 )
 
 func MarshallObjects(objects ...any) ([]byte, error) {
