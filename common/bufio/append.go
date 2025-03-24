@@ -1,9 +1,9 @@
 package bufio
 
 import (
-	"github.com/konglong147/sing/common"
-	"github.com/konglong147/sing/common/buf"
-	N "github.com/konglong147/sing/common/network"
+	"github.com/sagernet/sing/common"
+	"github.com/sagernet/sing/common/buf"
+	N "github.com/sagernet/sing/common/network"
 )
 
 type appendConn struct {

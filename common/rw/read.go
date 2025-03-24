@@ -3,7 +3,7 @@ package rw
 import (
 	"io"
 
-	"github.com/konglong147/sing/common"
+	"github.com/sagernet/sing/common"
 )
 
 func SkipN(reader io.Reader, size int) error {

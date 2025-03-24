@@ -3,7 +3,7 @@ package rw
 import (
 	"io"
 
-	"github.com/konglong147/sing/common"
+	"github.com/sagernet/sing/common"
 )
 
 // Deprecated: wtf is this?

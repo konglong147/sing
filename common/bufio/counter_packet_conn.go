@@ -1,11 +1,11 @@
 package bufio
 
 import (
-	"github.com/konglong147/sing/common"
-	"github.com/konglong147/sing/common/atomic"
-	"github.com/konglong147/sing/common/buf"
-	M "github.com/konglong147/sing/common/metadata"
-	N "github.com/konglong147/sing/common/network"
+	"github.com/sagernet/sing/common"
+	"github.com/sagernet/sing/common/atomic"
+	"github.com/sagernet/sing/common/buf"
+	M "github.com/sagernet/sing/common/metadata"
+	N "github.com/sagernet/sing/common/network"
 )
 
 type CounterPacketConn struct {

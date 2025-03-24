@@ -7,8 +7,8 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/konglong147/sing/common"
-	M "github.com/konglong147/sing/common/metadata"
+	"github.com/sagernet/sing/common"
+	M "github.com/sagernet/sing/common/metadata"
 
 	"golang.org/x/sys/unix"
 )

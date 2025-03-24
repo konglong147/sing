@@ -5,8 +5,8 @@ import (
 	"io"
 	"net"
 
-	"github.com/konglong147/sing/common/buf"
-	M "github.com/konglong147/sing/common/metadata"
+	"github.com/sagernet/sing/common/buf"
+	M "github.com/sagernet/sing/common/metadata"
 )
 
 type ServerConn struct {

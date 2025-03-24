@@ -1,8 +1,8 @@
 package network
 
 import (
-	"github.com/konglong147/sing/common"
-	E "github.com/konglong147/sing/common/exceptions"
+	"github.com/sagernet/sing/common"
+	E "github.com/sagernet/sing/common/exceptions"
 )
 
 type HandshakeFailure interface {

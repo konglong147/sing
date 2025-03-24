@@ -2,7 +2,7 @@
 
 package common
 
-import "github.com/konglong147/sing/common/x/constraints"
+import "github.com/sagernet/sing/common/x/constraints"
 
 func Min[T constraints.Ordered](x, y T) T {
 	if x < y {

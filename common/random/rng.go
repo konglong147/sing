@@ -5,7 +5,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/konglong147/sing/common"
+	"github.com/sagernet/sing/common"
 )
 
 const (

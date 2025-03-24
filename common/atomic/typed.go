@@ -3,7 +3,7 @@ package atomic
 import (
 	"sync/atomic"
 
-	"github.com/konglong147/sing/common"
+	"github.com/sagernet/sing/common"
 )
 
 type TypedValue[T any] struct {

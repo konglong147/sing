@@ -3,11 +3,11 @@ package socks
 import (
 	"net"
 
-	"github.com/konglong147/sing/common"
-	"github.com/konglong147/sing/common/buf"
-	"github.com/konglong147/sing/common/bufio"
-	M "github.com/konglong147/sing/common/metadata"
-	N "github.com/konglong147/sing/common/network"
+	"github.com/sagernet/sing/common"
+	"github.com/sagernet/sing/common/buf"
+	"github.com/sagernet/sing/common/bufio"
+	M "github.com/sagernet/sing/common/metadata"
+	N "github.com/sagernet/sing/common/network"
 )
 
 var _ N.VectorisedPacketWriter = (*VectorisedAssociatePacketConn)(nil)

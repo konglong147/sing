@@ -5,9 +5,9 @@ import (
 	"net/netip"
 	_ "unsafe"
 
-	"github.com/konglong147/sing/common"
-	E "github.com/konglong147/sing/common/exceptions"
-	M "github.com/konglong147/sing/common/metadata"
+	"github.com/sagernet/sing/common"
+	E "github.com/sagernet/sing/common/exceptions"
+	M "github.com/sagernet/sing/common/metadata"
 )
 
 var _ InterfaceFinder = (*DefaultInterfaceFinder)(nil)
