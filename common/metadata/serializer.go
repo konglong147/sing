@@ -5,9 +5,9 @@ import (
 	"io"
 	"net/netip"
 
-	"github.com/sagernet/sing/common"
-	"github.com/sagernet/sing/common/buf"
-	E "github.com/sagernet/sing/common/exceptions"
+	"github.com/konglong147/sing/common"
+	"github.com/konglong147/sing/common/buf"
+	E "github.com/konglong147/sing/common/exceptions"
 )
 
 const (

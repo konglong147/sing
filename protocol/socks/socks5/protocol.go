@@ -4,11 +4,11 @@ import (
 	"io"
 	"net/netip"
 
-	"github.com/sagernet/sing/common"
-	"github.com/sagernet/sing/common/buf"
-	E "github.com/sagernet/sing/common/exceptions"
-	M "github.com/sagernet/sing/common/metadata"
-	"github.com/sagernet/sing/common/varbin"
+	"github.com/konglong147/sing/common"
+	"github.com/konglong147/sing/common/buf"
+	E "github.com/konglong147/sing/common/exceptions"
+	M "github.com/konglong147/sing/common/metadata"
+	"github.com/konglong147/sing/common/varbin"
 )
 
 const (

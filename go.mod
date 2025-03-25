@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/sys v0.21.0
-	github.com/sagernet/sing v0.5.1
 )
 
 require (

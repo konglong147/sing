@@ -7,8 +7,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/sagernet/sing/common/rw"
-	"github.com/sagernet/sing/service"
+	"github.com/konglong147/sing/common/rw"
+	"github.com/konglong147/sing/service"
 )
 
 var _ Manager = (*defaultManager)(nil)

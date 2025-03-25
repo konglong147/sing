@@ -3,9 +3,9 @@ package uot
 import (
 	"net"
 
-	"github.com/sagernet/sing/common/buf"
-	"github.com/sagernet/sing/common/bufio"
-	N "github.com/sagernet/sing/common/network"
+	"github.com/konglong147/sing/common/buf"
+	"github.com/konglong147/sing/common/bufio"
+	N "github.com/konglong147/sing/common/network"
 )
 
 type LazyClientConn struct {

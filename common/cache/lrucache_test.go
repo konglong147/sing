@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sagernet/sing/common/cache"
+	"github.com/konglong147/sing/common/cache"
 
 	"github.com/stretchr/testify/require"
 )
